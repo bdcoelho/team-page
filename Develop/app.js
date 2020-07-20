@@ -1,6 +1,8 @@
-const Manager = require("./lib/manager");
-const Engineer = require("./lib/engineer");
-const Intern = require("./lib/intern");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+const Employee = require("./lib/Employee");
+
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -10,12 +12,10 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-let answers={}
-let answerSet=[]
-answers.addEmployee="Yes"
-console.log("1. " + answers.addEmployee)
-
-
+let answers = {};
+let employeeArray = [];
+answers.addEmployee = "Yes";
+console.log("1. " + answers.addEmployee);
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -26,91 +26,90 @@ function promptUser() {
     {
       type: "input",
       name: "name",
-      message: "What is your name?"
+      message: "What is your name?",
     },
     {
       type: "input",
       name: "id",
-      message: "What is your id?"
+      message: "What is your id?",
     },
     {
       type: "input",
       name: "email",
-      message: "What is your email?"
+      message: "What is your email?",
     },
     {
       type: "list",
       name: "role",
       message: "What is your current role?",
-      choices: [
-        "Engineer",
-        "Manager",
-        "Intern"
-      ]
+      choices: ["Engineer", "Manager", "Intern"],
     },
     {
       type: "input",
       name: "github",
       message: "What is your Github username?",
-      when: function(answers) {
+      when: function (answers) {
         return answers.role === "Engineer";
-      }
+      },
     },
     {
       type: "input",
       name: "school",
       message: "What school did you attend?",
-      when: function(answers) {
+      when: function (answers) {
         return answers.role === "Intern";
-      }
+      },
     },
     {
       type: "input",
-      name: "officePhoneNumber",
-      message: "What is your office phone number?",
-      when: function(answers) {
+      name: "officeNumber",
+      message: "What is your office number?",
+      when: function (answers) {
         return answers.role === "Manager";
-      }
-    },
-
-
-    {
-        type: "list",
-        name: "addEmployee",
-        message: "Add another employee?",
-        choices: [
-          "Yes",
-          "No"
-        ]
       },
-
-
+    },
+    {
+      type: "list",
+      name: "addEmployee",
+      message: "Add another employee?",
+      choices: ["Yes", "No"],
+    },
   ]);
 }
 
-async function init() {
-    while(answers.addEmployee==="Yes"){
-  try {
-    // init function pauses whilst gathering user data through the promptUser function and stores the data in "answers"
-    answers = await promptUser();
-    answerSet.push(answers);
-    console.log("2. ")
-    console.log(answers)
-    console.log("3. ")
-    console.log(answerSet)
-    
-    // `render` function will generate and return a block of HTML including templated divs for each employee
-
-    // notifies the user if successful
-    console.log("Successful");
-  } catch (err) {
-    // notifies the user if there was an error
-    console.log(err);
+function createEmployee(data) {
+  switch (data.role) {
+    case "Engineer":
+      return new Engineer(data.name, data.id, data.email, data.github);
+    case "Intern":
+      return new Intern(data.name, data.id, data.email, data.school);
+    case "Manager":
+      return new Manager(data.name, data.id, data.email, data.officeNumber);
+    default:
+      return "Invalid case";
   }
 }
 
-render(answerSet);
+async function init() {
+  while (answers.addEmployee === "Yes") {
+    try {
+      // init function pauses whilst gathering user data through the promptUser function and stores the data in "answers"
+      answers = await promptUser();
 
+      // logic to create object for different type of employee
+      employeeArray.push(createEmployee(answers));
+
+
+      // `render` function will generate and return a block of HTML including templated divs for each employee
+
+      // notifies the user if successful
+      console.log("Successful");
+    } catch (err) {
+      // notifies the user if there was an error
+      console.log(err);
+    }
+  }
+  render(employeeArray);
 }
 
 init();
@@ -131,6 +130,6 @@ init();
 
 // HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
 // and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
+// for further information. Be sure to testtest out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
