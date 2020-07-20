@@ -13,42 +13,57 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 const writeFileAsync = util.promisify(fs.writeFile);
 
-
 let answers = {};
 let employeeArray = [];
 answers.addEmployee = "Yes";
+let employeeIndex = 0;
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 // function to prompt the user with a series of questions to gather data for the file being created
-function promptUser() {
+function promptUser(answers) {
   return inquirer.prompt([
     {
       type: "input",
       name: "name",
-      message: "What is your name?",
+      message: "Please enter the team manager's name:",
+      when: function () {
+        return employeeIndex === 0;
+      },
+    },
+
+    {
+      type: "input",
+      name: "name",
+      message: "Please enter your name:",
+      when: function (answers) {
+        return employeeIndex !== 0;
+      },
     },
     {
       type: "input",
       name: "id",
-      message: "What is your id?",
+      message: "Please enter the ID of this employee:",
     },
     {
       type: "input",
       name: "email",
-      message: "What is your email?",
+      message: "What is this employee's email address?",
     },
     {
       type: "list",
       name: "role",
-      message: "What is your current role?",
-      choices: ["Engineer", "Manager", "Intern"],
+      message: "Please select your role:",
+      choices: ["Engineer", "Intern"],
+      when: function () {
+        return employeeIndex !== 0;
+      },
     },
     {
       type: "input",
       name: "github",
-      message: "What is your Github username?",
+      message: "Please enter your Github user name:",
       when: function (answers) {
         return answers.role === "Engineer";
       },
@@ -56,7 +71,7 @@ function promptUser() {
     {
       type: "input",
       name: "school",
-      message: "What school did you attend?",
+      message: "Please enter the name of the school where you obtained your most relevant qualification:",
       when: function (answers) {
         return answers.role === "Intern";
       },
@@ -64,15 +79,15 @@ function promptUser() {
     {
       type: "input",
       name: "officeNumber",
-      message: "What is your office number?",
-      when: function (answers) {
-        return answers.role === "Manager";
+      message: "Please enter your office number:",
+      when: function () {
+        return employeeIndex === 0;
       },
     },
     {
       type: "list",
       name: "addEmployee",
-      message: "Add another employee?",
+      message: "Would you like to add another employee?",
       choices: ["Yes", "No"],
     },
   ]);
@@ -95,9 +110,15 @@ async function init() {
   while (answers.addEmployee === "Yes") {
     try {
       // init function pauses whilst gathering user data through the promptUser function and stores the data in "answers"
-      answers = await promptUser();
+      answers = await promptUser(answers);
+      if (employeeIndex === 0){
+        answers.role="Manager";
+      };
+      employeeIndex += 1;
       // logic to create object for different type of employee
       employeeArray.push(createEmployee(answers));
+
+      console.log(employeeIndex);
       // notifies the user if successful
       console.log("Successful");
     } catch (err) {
@@ -109,23 +130,3 @@ async function init() {
 }
 
 init();
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to testtest out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```

@@ -1,0 +1,25 @@
+body {
+    color: #222222;
+    background-color: rgb(43, 76, 93);
+    font-size: 1em;
+    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.team-heading{
+background-color: rgb(7, 40, 56);
+color: white;
+font-weight: bolder;
+}
+
+.text-center{
+    font-size: 60px;
+}
+
+.card-header{
+    background-color: rgb(84, 133, 196);
+}
+
+.employee-card{
+    width: 250px;
+    margin: 10px;
+}
