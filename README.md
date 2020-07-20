@@ -43,14 +43,14 @@
 
   ## Usage
 
-  When working on terminal in the application directory, type 'node index.js'. The user will then receive a series of prompts corresponding to the sections of the readme document.
+  When working on terminal in the application directory, type ```node index.js```. The user will then receive a series of prompts corresponding to the sections of the readme document.
 
 
   ## License
 
   ![License Badge](https://img.shields.io/badge/license-MIT-blue)
 
-  You may utilize this application under the terms of the [MIT license](assets/licences/MIT.txt).
+  You may utilize this application under the terms of the [MIT license](./Assets/licences/MIT.txt).
 
 
   ## Contributions
