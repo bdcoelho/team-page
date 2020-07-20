@@ -25,14 +25,14 @@
 
   ## Description
 
-  This application allows a user to generate a web-page for their team which will display each team member's role and contact information. The project uses the npm inquirer package and node.js to prompt the user for information about their team via the terminal. It also demonstrates the use of classes and object-oriented programming in javascript to make the code manageable and reusable. The information provided by the user is dynamically rendered into an html page that can be published on the company website. The page is styled and made responsive using the bootstrap framework.
+  This application allows a user to generate a web-page for their team which will display each team member's role and contact information. The project uses the npm inquirer package and node.js to prompt the user to enter information about their team via the terminal. It also demonstrates the use of classes and object-oriented programming in javascript to make code more manageable and reusable. The information provided by the user is dynamically rendered into an html page that can be published on the company website. The page is styled and made responsive using the bootstrap framework.
 
 
   ## Demonstration
 
   View a live demonstration [here](https://youtu.be/m_QH2Y52wDQ).
 
-  #### A screenshot of the typical terminal workflow.
+  #### A screenshot of the generated web page
 
   ![Screenshot](./Assets/screenshot.png "Screenshot")
 
