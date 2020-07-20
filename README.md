@@ -34,7 +34,7 @@
 
   #### A screenshot of the typical terminal workflow.
 
-  ![Screenshot](./assets/screenshot.png "Screenshot")
+  ![Screenshot](./Assets/screenshot.png "Screenshot")
 
   ## Setup
 
