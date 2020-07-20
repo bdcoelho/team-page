@@ -65,7 +65,7 @@
 
   ## Tests
 
-  I have included tests to ensure that the classes and their methods are being accessed correctly. The tests can be run by entering 'npm run test' from the terminal in the 'develop' directory.
+  I have included tests to ensure that the classes and their methods are being accessed correctly. The tests can be run by entering ```npm run test``` from the terminal in the ```develop``` directory.
 
   ## Questions
 
