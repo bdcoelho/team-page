@@ -5,18 +5,16 @@ const templatesDir = path.resolve(__dirname, "../templates");
 
 const render = employees => {
   const html = [];
-  console.log("Watch this");
-console.log(employees);
   html.push(employees
-    .filter(employee => employee.getRole(console.log(employee)) === "Manager")
+    .filter(employee => employee.getRole() === "Manager")
     .map(manager => renderManager(manager))
   );
   html.push(employees
-    .filter(employee => employee.getRole(console.log(employee)) === "Engineer")
+    .filter(employee => employee.getRole() === "Engineer")
     .map(engineer => renderEngineer(engineer))
   );
   html.push(employees
-    .filter(employee => employee.getRole(console.log(employee)) === "Intern")
+    .filter(employee => employee.getRole() === "Intern")
     .map(intern => renderIntern(intern))
   );
 

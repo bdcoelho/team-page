@@ -1,7 +1,6 @@
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const Employee = require("./lib/Employee");
 
 const inquirer = require("inquirer");
 const path = require("path");
@@ -15,7 +14,6 @@ const render = require("./lib/htmlRenderer");
 let answers = {};
 let employeeArray = [];
 answers.addEmployee = "Yes";
-console.log("1. " + answers.addEmployee);
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -95,13 +93,8 @@ async function init() {
     try {
       // init function pauses whilst gathering user data through the promptUser function and stores the data in "answers"
       answers = await promptUser();
-
       // logic to create object for different type of employee
       employeeArray.push(createEmployee(answers));
-
-
-      // `render` function will generate and return a block of HTML including templated divs for each employee
-
       // notifies the user if successful
       console.log("Successful");
     } catch (err) {
@@ -109,7 +102,7 @@ async function init() {
       console.log(err);
     }
   }
-  render(employeeArray);
+  await writeFileAsync(outputPath, render(employeeArray));
 }
 
 init();
